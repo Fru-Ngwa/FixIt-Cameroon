@@ -86,7 +86,7 @@ The UI is organized into rows/sections that map to individual contributor owners
 | Teammate 1 | Row 1 — Onboarding & Authentication (Splash, Onboarding, Login, Sign Up) |
 | Teammate 2 | Row 2 — Home & Discover (Home, Categories, Map View, Search & Filter, Issue Details) |
 | Teammate 3 | Row 3 — Reporting Flow (Report Steps 1–3, Duplicate Check, Submission Success) |
-| **You** | Rows 4–5 — Resolution & Community Action, Profile & Community, Admin/Municipal Dashboard, and Additional Screens (My Reports, Notifications, Comments, Bookmarks, Sponsors, Organizations, Analytics) |
+| Teammate 4 | Rows 4–5 — Resolution & Community Action, Profile & Community, Admin/Municipal Dashboard, and Additional Screens (My Reports, Notifications, Comments, Bookmarks, Sponsors, Organizations, Analytics) |
 
 Please open a feature branch per screen/flow you're working on (e.g., `feature/onboarding`, `feature/reporting-flow`, `feature/resolution-flow`) and submit a PR for review before merging to `main`.
 
