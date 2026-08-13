@@ -46,12 +46,10 @@ FixItCameroon is a civic-engagement mobile app that lets citizens report local i
 
 ## 🛠️ Tech Stack
 
-> _Update this section with the actual stack once finalized._
-
-- **Frontend:** _(e.g., React Native / Flutter)_
-- **Backend:** _(e.g., Node.js / Firebase)_
-- **Database:** _(e.g., PostgreSQL / Firestore)_
-- **Maps & Location:** _(e.g., Google Maps SDK)_
+- **Frontend:** _React as a PWA_
+- **Backend:** _Node/Express_
+- **Database:** _PostgreSQL_
+- **Maps & Location:** _Google Maps SDK_
 - **Auth:** Email/Phone, Google, Facebook
 
 ---
