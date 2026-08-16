@@ -3,6 +3,13 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+// --- Reporting Flow (teammate) ---
+import ReportIssueStep1Screen from './screens/reporting/ReportIssueStep1';
+import ReportIssueStep2Screen from './screens/reporting/ReportIssueStep2';
+import ReportIssueStep3Screen from './screens/reporting/ReportIssueStep3';
+import DuplicateCheckScreen from './screens/reporting/DuplicateCheck';
+import SubmissionSuccessScreen from './screens/reporting/SubmissionSuccess';
+
 // --- Row 4: Resolution & Community Action ---
 import CommunityActionScreen from './screens/resolution/CommunityActionScreen';
 import MissionDetailsScreen from './screens/resolution/MissionDetailsScreen';
@@ -28,11 +35,10 @@ import AnalyticsScreen from './screens/extras/AnalyticsScreen';
 // --- Dev only: temporary menu for jumping between screens during testing ---
 import DevMenuScreen from './screens/DevMenuScreen';
 
-// TODO (teammates): import Onboarding/Auth, Home/Discover, and Reporting Flow
-// screens here once ready, e.g.:
+// TODO (teammates): import Onboarding/Auth and Home/Discover screens here
+// once ready, e.g.:
 // import SplashScreen from './screens/onboarding/SplashScreen';
 // import HomeScreen from './screens/home/HomeScreen';
-// import ReportStep1Screen from './screens/reporting/ReportStep1Screen';
 
 // NOTE: AuthProvider / context is not wired in yet since the backend isn't
 // built. Once JWT auth is ready, wrap NavigationContainer with AuthProvider
@@ -50,6 +56,13 @@ export default function App() {
         >
           {/* Dev menu - remove once real navigation flow is wired */}
           <Stack.Screen name="DevMenu" component={DevMenuScreen} />
+
+          {/* Reporting Flow */}
+          <Stack.Screen name="ReportIssueStep1" component={ReportIssueStep1Screen} />
+          <Stack.Screen name="ReportIssueStep2" component={ReportIssueStep2Screen} />
+          <Stack.Screen name="ReportIssueStep3" component={ReportIssueStep3Screen} />
+          <Stack.Screen name="DuplicateCheck" component={DuplicateCheckScreen} />
+          <Stack.Screen name="SubmissionSuccess" component={SubmissionSuccessScreen} />
 
           {/* Resolution & Community Action */}
           <Stack.Screen name="CommunityAction" component={CommunityActionScreen} />
@@ -73,7 +86,7 @@ export default function App() {
           <Stack.Screen name="Organizations" component={OrganizationsScreen} />
           <Stack.Screen name="Analytics" component={AnalyticsScreen} />
 
-          {/* TODO (teammates): add your Stack.Screen entries here */}
+          {/* TODO (teammates): add your remaining Stack.Screen entries here */}
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

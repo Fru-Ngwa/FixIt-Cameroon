@@ -5,6 +5,16 @@ import { COLORS, SPACING, RADIUS } from '../constants/theme';
 
 const SECTIONS = [
   {
+    title: 'Reporting Flow',
+    screens: [
+      'ReportIssueStep1',
+      'ReportIssueStep2',
+      'ReportIssueStep3',
+      'DuplicateCheck',
+      'SubmissionSuccess',
+    ],
+  },
+  {
     title: 'Resolution & Community Action',
     screens: ['CommunityAction', 'MissionDetails', 'ResolutionUpdate', 'VerifyResolution'],
   },
