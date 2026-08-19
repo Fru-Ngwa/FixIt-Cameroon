@@ -13,7 +13,7 @@ export default function SponsorsScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation?.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Sponsors</Text>
@@ -24,9 +24,7 @@ export default function SponsorsScreen({ navigation }) {
         <View style={styles.banner}>
           <Ionicons name="leaf-outline" size={28} color={COLORS.white} />
           <Text style={styles.bannerTitle}>Support a better Cameroon</Text>
-          <Text style={styles.bannerSubtitle}>
-            Sponsor issues and missions in your community.
-          </Text>
+          <Text style={styles.bannerSubtitle}>Sponsor issues and missions in your community.</Text>
           <TouchableOpacity style={styles.bannerButton}>
             <Text style={styles.bannerButtonText}>Become a Sponsor</Text>
           </TouchableOpacity>

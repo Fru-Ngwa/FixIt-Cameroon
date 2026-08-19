@@ -11,17 +11,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { COLORS, SPACING, RADIUS } from '../../constants/theme';
 
-const GREEN = '#3E7C48';
+// Local image - replace assets/images/photo7.png with your banner
+const BANNER_IMAGE = require('../../assets/images/road.jpg');
 
 const CATEGORIES = [
-  { key: 'Roads', label: 'Roads', iconSet: 'mci', icon: 'binoculars' },
-  { key: 'Streetlights', label: 'Streetlights', iconSet: 'mci', icon: 'lightbulb-outline' },
-  { key: 'Drainage', label: 'Drainage', iconSet: 'mci', icon: 'pipe' },
-  { key: 'Water', label: 'Water', iconSet: 'mci', icon: 'water-outline' },
-  { key: 'Waste', label: 'Waste', iconSet: 'mci', icon: 'trash-can-outline' },
+  { key: 'Roads', label: 'Roads', icon: 'binoculars' },
+  { key: 'Streetlights', label: 'Streetlights', icon: 'lightbulb-outline' },
+  { key: 'Drainage', label: 'Drainage', icon: 'pipe' },
+  { key: 'Water', label: 'Water', icon: 'water-outline' },
+  { key: 'Waste', label: 'Waste', icon: 'trash-can-outline' },
   { key: 'Environment', label: 'Environment', badge: true },
-  { key: 'Buildings', label: 'Buildings', iconSet: 'mci', icon: 'office-building-outline' },
-  { key: 'Safety', label: 'Safety', iconSet: 'mci', icon: 'shield-outline' },
+  { key: 'Buildings', label: 'Buildings', icon: 'office-building-outline' },
+  { key: 'Safety', label: 'Safety', icon: 'shield-outline' },
   { key: 'Other', label: 'Other', dots: true },
 ];
 
@@ -34,18 +35,14 @@ const QUICK_ACTIONS = [
 export default function CategoriesScreen({ navigation }) {
   const [selected, setSelected] = useState('Roads');
 
-  const handleSelectCategory = (key) => {
-    setSelected(key);
-  };
-
   const handleQuickAction = (key) => {
-    if (key === 'reports') {
-      navigation.navigate('MyReports');
-    }
+    if (key === 'reports') navigation.navigate('MyReports');
+    if (key === 'nearby') navigation.navigate('Mapview');
+    if (key === 'upvote') navigation.navigate('SearchAndFilter');
   };
 
   const renderCategoryIcon = (cat, isSelected) => {
-    const iconColor = isSelected || cat.key === 'Roads' ? GREEN : COLORS.text;
+    const iconColor = isSelected || cat.key === 'Roads' ? COLORS.primary : COLORS.text;
 
     if (cat.badge) {
       return (
@@ -64,56 +61,33 @@ export default function CategoriesScreen({ navigation }) {
       );
     }
 
-    return (
-      <MaterialCommunityIcons
-        name={cat.icon}
-        size={24}
-        color={iconColor}
-      />
-    );
+    return <MaterialCommunityIcons name={cat.icon} size={24} color={iconColor} />;
   };
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.topbar}>
-        <TouchableOpacity
-          style={styles.backBtn}
-          onPress={() => navigation.goBack()}
-        >
+        <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
-
         <Text style={styles.title}>Categories</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
-        <Image
-          source={require('../../assets/Categories.jpeg')}
-          style={styles.banner}
-        />
+        <Image source={BANNER_IMAGE} style={styles.banner} />
 
         <View style={styles.grid}>
           {CATEGORIES.map((cat) => {
             const isSelected = selected === cat.key;
-
             return (
               <TouchableOpacity
                 key={cat.key}
-                style={[
-                  styles.card,
-                  isSelected && styles.cardSelected,
-                ]}
-                onPress={() => handleSelectCategory(cat.key)}
+                style={[styles.card, isSelected && styles.cardSelected]}
+                onPress={() => setSelected(cat.key)}
                 activeOpacity={0.7}
               >
                 {renderCategoryIcon(cat, isSelected)}
-
-                <Text
-                  style={[
-                    styles.cardLabel,
-                    isSelected && styles.cardLabelSelected,
-                  ]}
-                >
+                <Text style={[styles.cardLabel, isSelected && styles.cardLabelSelected]}>
                   {cat.label}
                 </Text>
               </TouchableOpacity>
@@ -134,12 +108,9 @@ export default function CategoriesScreen({ navigation }) {
               <Ionicons
                 name={action.icon}
                 size={22}
-                color={action.accent ? GREEN : COLORS.text}
+                color={action.accent ? COLORS.primary : COLORS.text}
               />
-
-              <Text style={[styles.cardLabel, styles.quickLabel]}>
-                {action.label}
-              </Text>
+              <Text style={[styles.cardLabel, styles.quickLabel]}>{action.label}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -149,18 +120,8 @@ export default function CategoriesScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.background,
-  },
-
-  banner: {
-    width: '100%',
-    height: 160,
-    borderRadius: RADIUS.md,
-    marginBottom: SPACING.lg,
-  },
-
+  container: { flex: 1, backgroundColor: COLORS.background },
+  banner: { width: '100%', height: 160, borderRadius: RADIUS.md, marginBottom: SPACING.lg },
   topbar: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -168,29 +129,10 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.md,
     paddingHorizontal: SPACING.lg,
   },
-
-  backBtn: {
-    position: 'absolute',
-    left: SPACING.lg,
-  },
-
-  title: {
-    fontSize: 17,
-    fontWeight: '600',
-    color: COLORS.text,
-  },
-
-  content: {
-    padding: SPACING.lg,
-    paddingBottom: SPACING.xl,
-  },
-
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-
+  backBtn: { position: 'absolute', left: SPACING.lg },
+  title: { fontSize: 17, fontWeight: '600', color: COLORS.text },
+  content: { padding: SPACING.lg, paddingBottom: SPACING.xl },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
   card: {
     width: '31.5%',
     aspectRatio: 1,
@@ -203,11 +145,7 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.sm,
     paddingHorizontal: 4,
   },
-
-  cardSelected: {
-    borderColor: GREEN,
-  },
-
+  cardSelected: { borderColor: COLORS.primary },
   cardLabel: {
     marginTop: SPACING.sm,
     fontSize: 12.5,
@@ -215,17 +153,8 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     textAlign: 'center',
   },
-
-  cardLabelSelected: {
-    color: GREEN,
-    fontWeight: '600',
-  },
-
-  quickLabel: {
-    fontWeight: '600',
-    lineHeight: 16,
-  },
-
+  cardLabelSelected: { color: COLORS.primary, fontWeight: '600' },
+  quickLabel: { fontWeight: '600', lineHeight: 16 },
   sectionLabel: {
     fontSize: 14,
     fontWeight: '600',
@@ -233,26 +162,14 @@ const styles = StyleSheet.create({
     marginTop: SPACING.lg,
     marginBottom: SPACING.sm,
   },
-
   iconBadge: {
     width: 26,
     height: 26,
     borderRadius: 13,
-    backgroundColor: GREEN,
+    backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
-
-  dualDot: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  dot: {
-    width: 9,
-    height: 9,
-    borderRadius: 4.5,
-    backgroundColor: GREEN,
-  },
+  dualDot: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
+  dot: { width: 9, height: 9, borderRadius: 4.5, backgroundColor: COLORS.primary },
 });

@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
-import { COLORS, SPACING, RADIUS } from '../../constants/theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS, SPACING, RADIUS } from '../../constants/theme';
 
-
-
+// Local images - replace assets/images/photo15.png through photo19.png with avatars
 const LEADERS = [
-  { id: '1', name: 'Jean Tchanda', points: 890, avatar: 'https://randomuser.me/api/portraits/men/32.jpg' },
-  { id: '2', name: 'Sarah M.', points: 730, avatar: 'https://randomuser.me/api/portraits/women/44.jpg' },
-  { id: '3', name: 'Green Buea Assoc.', points: 610, avatar: 'https://randomuser.me/api/portraits/men/65.jpg' },
-  { id: '4', name: 'Mike B.', points: 540, avatar: 'https://randomuser.me/api/portraits/men/22.jpg' },
-  { id: '5', name: 'John K.', points: 420, avatar: 'https://randomuser.me/api/portraits/men/51.jpg' },
+  { id: '1', name: 'Jean Tchanda', points: 890, avatar: require('../../assets/images/p1.jpg') },
+  { id: '2', name: 'Sarah M.', points: 730, avatar: require('../../assets/images/p2.jpg') },
+  { id: '3', name: 'Green Buea Assoc.', points: 610, avatar: require('../../assets/images/p3.jpg') },
+  { id: '4', name: 'Mike B.', points: 540, avatar: require('../../assets/images/p4.jpg') },
+  { id: '5', name: 'John K.', points: 420, avatar: require('../../assets/images/p5.jpg') },
 ];
 
 export default function LeaderboardScreen() {
@@ -18,7 +17,6 @@ export default function LeaderboardScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-    <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Leaderboard</Text>
       </View>
@@ -28,17 +26,13 @@ export default function LeaderboardScreen() {
           style={[styles.tab, tab === 'month' && styles.tabActive]}
           onPress={() => setTab('month')}
         >
-          <Text style={[styles.tabText, tab === 'month' && styles.tabTextActive]}>
-            This Month
-          </Text>
+          <Text style={[styles.tabText, tab === 'month' && styles.tabTextActive]}>This Month</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.tab, tab === 'all' && styles.tabActive]}
           onPress={() => setTab('all')}
         >
-          <Text style={[styles.tabText, tab === 'all' && styles.tabTextActive]}>
-            All Time
-          </Text>
+          <Text style={[styles.tabText, tab === 'all' && styles.tabTextActive]}>All Time</Text>
         </TouchableOpacity>
       </View>
 
@@ -46,7 +40,7 @@ export default function LeaderboardScreen() {
         {LEADERS.map((leader, index) => (
           <View key={leader.id} style={styles.row}>
             <Text style={styles.rank}>{index + 1}</Text>
-            <Image source={{ uri: leader.avatar }} style={styles.avatar} />
+            <Image source={leader.avatar} style={styles.avatar} />
             <Text style={styles.name}>{leader.name}</Text>
             <Text style={styles.points}>{leader.points} pts</Text>
           </View>
@@ -56,7 +50,6 @@ export default function LeaderboardScreen() {
           <Text style={styles.viewAllText}>View Full Leaderboard</Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
     </SafeAreaView>
   );
 }
@@ -85,10 +78,6 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.sm,
     borderWidth: 1,
     borderColor: COLORS.border,
-  },
-  content: {
-    padding: SPACING.md,
-    paddingTop: SPACING.xl,
   },
   rank: { width: 24, fontSize: 14, fontWeight: '700', color: COLORS.text },
   avatar: { width: 36, height: 36, borderRadius: RADIUS.pill, marginRight: SPACING.sm },

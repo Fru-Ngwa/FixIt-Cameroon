@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING, RADIUS } from '../../constants/theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
+// Local image - replace assets/images/photo20.png with a recent issue thumbnail
+const RECENT_ISSUE_IMAGE = require('../../assets/images/pothole.jpg');
 
 const OVERVIEW = [
   { id: '1', label: 'Reported', value: 247, color: COLORS.text },
@@ -14,21 +16,20 @@ const OVERVIEW = [
 const AVG_RESOLUTION_DAYS = 4.2;
 
 const RECENT_ISSUES = [
-  {
-    id: '1',
-    title: 'Large pothole on Molyko Rd',
-    time: 'Today, 10:30 AM',
-    severity: 'High',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
-  },
+  { id: '1', title: 'Large pothole on Molyko Rd', time: 'Today, 10:30 AM', severity: 'High' },
 ];
 
-const TABS = ['Dashboard', 'Issues', 'Reports', 'Users', 'More'];
+const TABS = [
+  { key: 'Dashboard', target: null },
+  { key: 'Issues', target: 'SearchAndFilter' },
+  { key: 'Reports', target: 'Analytics' },
+  { key: 'Users', target: 'Organizations' },
+  { key: 'More', target: 'Sponsors' },
+];
 
-export default function MunicipalityDashboardScreen() {
+export default function MunicipalityDashboardScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-    <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Municipality Dashboard</Text>
         <Ionicons name="ellipsis-vertical" size={18} color={COLORS.text} />
@@ -52,14 +53,18 @@ export default function MunicipalityDashboardScreen() {
 
         <View style={styles.rowBetween}>
           <Text style={styles.sectionLabel}>Recent Issues</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('SearchAndFilter')}>
             <Text style={styles.viewAll}>View all</Text>
           </TouchableOpacity>
         </View>
 
         {RECENT_ISSUES.map((issue) => (
-          <View key={issue.id} style={styles.issueCard}>
-            <Image source={{ uri: issue.image }} style={styles.issueImage} />
+          <TouchableOpacity
+            key={issue.id}
+            style={styles.issueCard}
+            onPress={() => navigation.navigate('IssueDetails', { issueId: '1024', title: issue.title })}
+          >
+            <Image source={RECENT_ISSUE_IMAGE} style={styles.issueImage} />
             <View style={{ flex: 1 }}>
               <Text style={styles.issueTitle}>{issue.title}</Text>
               <Text style={styles.issueTime}>{issue.time}</Text>
@@ -67,18 +72,21 @@ export default function MunicipalityDashboardScreen() {
             <View style={styles.severityBadge}>
               <Text style={styles.severityText}>{issue.severity}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
 
       <View style={styles.tabBar}>
         {TABS.map((tab) => (
-          <TouchableOpacity key={tab} style={styles.tabBarItem}>
-            <Text style={styles.tabBarText}>{tab}</Text>
+          <TouchableOpacity
+            key={tab.key}
+            style={styles.tabBarItem}
+            onPress={() => tab.target && navigation.navigate(tab.target)}
+          >
+            <Text style={styles.tabBarText}>{tab.key}</Text>
           </TouchableOpacity>
         ))}
       </View>
-    </View>
     </SafeAreaView>
   );
 }
@@ -134,12 +142,7 @@ const styles = StyleSheet.create({
   issueImage: { width: 56, height: 56, borderRadius: RADIUS.sm, marginRight: SPACING.sm },
   issueTitle: { fontSize: 13, fontWeight: '600', color: COLORS.text },
   issueTime: { fontSize: 11, color: COLORS.textMuted, marginTop: 2 },
-  severityBadge: {
-    backgroundColor: '#FDECEC',
-    borderRadius: RADIUS.pill,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-  },
+  severityBadge: { backgroundColor: '#FDECEC', borderRadius: RADIUS.pill, paddingHorizontal: 10, paddingVertical: 4 },
   severityText: { fontSize: 11, color: COLORS.danger, fontWeight: '600' },
   tabBar: {
     flexDirection: 'row',
@@ -148,10 +151,6 @@ const styles = StyleSheet.create({
     borderTopColor: COLORS.border,
     backgroundColor: COLORS.card,
     paddingVertical: SPACING.sm,
-  },
-  content: {
-    padding: SPACING.md,
-    paddingTop: SPACING.xl,
   },
   tabBarItem: { alignItems: 'center' },
   tabBarText: { fontSize: 11, color: COLORS.textMuted },

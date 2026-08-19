@@ -27,7 +27,7 @@ export default function AnalyticsScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation?.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Analytics</Text>
@@ -40,12 +40,7 @@ export default function AnalyticsScreen({ navigation }) {
           <View style={styles.chartRow}>
             {WEEKLY_REPORTS.map((item) => (
               <View key={item.day} style={styles.barColumn}>
-                <View
-                  style={[
-                    styles.bar,
-                    { height: (item.value / MAX_VALUE) * 90 },
-                  ]}
-                />
+                <View style={[styles.bar, { height: (item.value / MAX_VALUE) * 90 }]} />
                 <Text style={styles.barLabel}>{item.day}</Text>
               </View>
             ))}

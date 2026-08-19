@@ -5,41 +5,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING, RADIUS } from '../../constants/theme';
 
 const NOTIFICATIONS = [
-  {
-    id: '1',
-    icon: 'checkmark-circle-outline',
-    title: 'Your issue #1024 is now In Progress',
-    time: '2hrs ago',
-    unread: true,
-  },
-  {
-    id: '2',
-    icon: 'megaphone-outline',
-    title: 'City Council has scheduled an inspection for tomorrow',
-    time: '5hrs ago',
-    unread: true,
-  },
-  {
-    id: '3',
-    icon: 'chatbubble-outline',
-    title: 'Sarah M. commented on issue #1032',
-    time: '1 day ago',
-    unread: false,
-  },
-  {
-    id: '4',
-    icon: 'thumbs-up-outline',
-    title: 'You received 5 upvotes on your report',
-    time: '2 days ago',
-    unread: false,
-  },
+  { id: '1', icon: 'checkmark-circle-outline', title: 'Your issue #1024 is now In Progress', time: '2hrs ago', unread: true },
+  { id: '2', icon: 'megaphone-outline', title: 'City Council has scheduled an inspection for tomorrow', time: '5hrs ago', unread: true },
+  { id: '3', icon: 'chatbubble-outline', title: 'Sarah M. commented on issue #1032', time: '1 day ago', unread: false },
+  { id: '4', icon: 'thumbs-up-outline', title: 'You received 5 upvotes on your report', time: '2 days ago', unread: false },
 ];
 
 export default function NotificationsScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation?.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Notifications</Text>

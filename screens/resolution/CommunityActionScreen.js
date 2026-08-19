@@ -1,22 +1,21 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING, RADIUS } from '../../constants/theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ACTIONS = [
-  { id: '1', icon: 'people-outline', title: 'I can help (Volunteer)' },
-  { id: '2', icon: 'hammer-outline', title: 'I have materials / equipment' },
-  { id: '3', icon: 'cash-outline', title: 'I can sponsor this issue' },
-  { id: '4', icon: 'business-outline', title: 'I represent an organization' },
+  { id: '1', icon: 'people-outline', title: 'I can help (Volunteer)', target: 'MissionDetails' },
+  { id: '2', icon: 'hammer-outline', title: 'I have materials / equipment', target: null },
+  { id: '3', icon: 'cash-outline', title: 'I can sponsor this issue', target: 'Sponsors' },
+  { id: '4', icon: 'business-outline', title: 'I represent an organization', target: 'Organizations' },
 ];
 
 export default function CommunityActionScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-    <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation?.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Community Action</Text>
@@ -24,13 +23,15 @@ export default function CommunityActionScreen({ navigation }) {
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.intro}>
-          This issue can be resolved with community help.
-        </Text>
+        <Text style={styles.intro}>This issue can be resolved with community help.</Text>
         <Text style={styles.subIntro}>Help your community better.</Text>
 
         {ACTIONS.map((action) => (
-          <TouchableOpacity key={action.id} style={styles.actionRow}>
+          <TouchableOpacity
+            key={action.id}
+            style={styles.actionRow}
+            onPress={() => action.target && navigation.navigate(action.target)}
+          >
             <View style={styles.iconWrap}>
               <Ionicons name={action.icon} size={20} color={COLORS.primary} />
             </View>
@@ -43,7 +44,6 @@ export default function CommunityActionScreen({ navigation }) {
           <Text style={styles.howItWorksText}>How it works?</Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
     </SafeAreaView>
   );
 }
@@ -81,10 +81,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: SPACING.md,
-  },
-  content: {
-    padding: SPACING.md,
-    paddingTop: SPACING.xl,
   },
   actionText: { flex: 1, fontSize: 14, color: COLORS.text, fontWeight: '500' },
   howItWorks: { alignSelf: 'center', marginTop: SPACING.lg },

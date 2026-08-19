@@ -1,39 +1,38 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING, RADIUS } from '../../constants/theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-
+// Local image - replace assets/images/photo14.png with the user's avatar
+const AVATAR_IMAGE = require('../../assets/images/profile.jpg');
 
 const USER = {
   name: 'Jean Tchanda',
   location: 'Buea, Cameroon',
-  avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
   reported: 12,
   resolved: 27,
   upvotes: 45,
 };
 
 const MENU_ITEMS = [
-  { id: '1', icon: 'document-text-outline', label: 'My Reports' },
-  { id: '2', icon: 'flag-outline', label: 'My Missions' },
-  { id: '3', icon: 'bookmark-outline', label: 'My Bookmarks' },
-  { id: '4', icon: 'people-outline', label: 'Following' },
-  { id: '5', icon: 'settings-outline', label: 'Settings' },
+  { id: '1', icon: 'document-text-outline', label: 'My Reports', target: 'MyReports' },
+  { id: '2', icon: 'flag-outline', label: 'My Missions', target: null },
+  { id: '3', icon: 'bookmark-outline', label: 'My Bookmarks', target: 'Bookmarks' },
+  { id: '4', icon: 'people-outline', label: 'Following', target: 'Organizations' },
+  { id: '5', icon: 'settings-outline', label: 'Settings', target: null },
 ];
 
 export default function ProfileScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-    <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Profile</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.profileCard}>
-          <Image source={{ uri: USER.avatar }} style={styles.avatar} />
+          <Image source={AVATAR_IMAGE} style={styles.avatar} />
           <Text style={styles.name}>{USER.name}</Text>
           <View style={styles.locationRow}>
             <Ionicons name="location-outline" size={14} color={COLORS.textMuted} />
@@ -58,7 +57,11 @@ export default function ProfileScreen({ navigation }) {
 
         <View style={styles.menu}>
           {MENU_ITEMS.map((item) => (
-            <TouchableOpacity key={item.id} style={styles.menuRow}>
+            <TouchableOpacity
+              key={item.id}
+              style={styles.menuRow}
+              onPress={() => item.target && navigation.navigate(item.target)}
+            >
               <Ionicons name={item.icon} size={20} color={COLORS.text} />
               <Text style={styles.menuLabel}>{item.label}</Text>
               <Ionicons name="chevron-forward" size={18} color={COLORS.textMuted} />
@@ -66,7 +69,6 @@ export default function ProfileScreen({ navigation }) {
           ))}
         </View>
       </ScrollView>
-    </View>
     </SafeAreaView>
   );
 }
@@ -104,10 +106,6 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.md,
     borderWidth: 1,
     borderColor: COLORS.border,
-  },
-  content: {
-    padding: SPACING.md,
-    paddingTop: SPACING.xl,
   },
   menuRow: {
     flexDirection: 'row',

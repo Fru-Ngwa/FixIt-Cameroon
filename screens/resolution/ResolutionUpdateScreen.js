@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING, RADIUS } from '../../constants/theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 
 const TIMELINE = [
   { id: '1', title: 'Work started', date: '18 May 2026, 08:15 AM', done: true },
@@ -15,9 +14,8 @@ const TIMELINE = [
 export default function ResolutionUpdateScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-    <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation?.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Resolution Update</Text>
@@ -28,33 +26,27 @@ export default function ResolutionUpdateScreen({ navigation }) {
         {TIMELINE.map((item, index) => (
           <View key={item.id} style={styles.timelineRow}>
             <View style={styles.timelineIndicator}>
-              <View
-                style={[
-                  styles.dot,
-                  { backgroundColor: item.done ? COLORS.primary : COLORS.border },
-                ]}
-              >
-                {item.done && (
-                  <Ionicons name="checkmark" size={12} color={COLORS.white} />
-                )}
+              <View style={[styles.dot, { backgroundColor: item.done ? COLORS.primary : COLORS.border }]}>
+                {item.done && <Ionicons name="checkmark" size={12} color={COLORS.white} />}
               </View>
               {index < TIMELINE.length - 1 && <View style={styles.line} />}
             </View>
             <View style={styles.timelineContent}>
-              <Text
-                style={[
-                  styles.timelineTitle,
-                  { color: item.done ? COLORS.text : COLORS.textMuted },
-                ]}
-              >
+              <Text style={[styles.timelineTitle, { color: item.done ? COLORS.text : COLORS.textMuted }]}>
                 {item.title}
               </Text>
               <Text style={styles.timelineDate}>{item.date}</Text>
             </View>
           </View>
         ))}
+
+        <TouchableOpacity
+          style={styles.verifyButton}
+          onPress={() => navigation.navigate('VerifyResolution')}
+        >
+          <Text style={styles.verifyButtonText}>Verify Resolution</Text>
+        </TouchableOpacity>
       </ScrollView>
-    </View>
     </SafeAreaView>
   );
 }
@@ -74,19 +66,17 @@ const styles = StyleSheet.create({
   content: { padding: SPACING.md },
   timelineRow: { flexDirection: 'row' },
   timelineIndicator: { alignItems: 'center', width: 28 },
-  dot: {
-    width: 20,
-    height: 20,
-    borderRadius: RADIUS.pill,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  content: {
-    padding: SPACING.md,
-    paddingTop: SPACING.xl,
-  },
+  dot: { width: 20, height: 20, borderRadius: RADIUS.pill, alignItems: 'center', justifyContent: 'center' },
   line: { width: 2, flex: 1, backgroundColor: COLORS.border, marginVertical: 2 },
   timelineContent: { flex: 1, paddingBottom: SPACING.lg, marginLeft: SPACING.sm },
   timelineTitle: { fontSize: 14, fontWeight: '600' },
   timelineDate: { fontSize: 12, color: COLORS.textMuted, marginTop: 2 },
+  verifyButton: {
+    backgroundColor: COLORS.primary,
+    borderRadius: RADIUS.md,
+    paddingVertical: 14,
+    alignItems: 'center',
+    marginTop: SPACING.sm,
+  },
+  verifyButtonText: { color: COLORS.white, fontWeight: '600', fontSize: 15 },
 });

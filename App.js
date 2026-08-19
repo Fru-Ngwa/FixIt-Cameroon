@@ -3,24 +3,39 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// --- Reporting Flow (teammate) ---
-import ReportIssueStep1Screen from './screens/reporting/ReportIssueStep1';
-import ReportIssueStep2Screen from './screens/reporting/ReportIssueStep2';
-import ReportIssueStep3Screen from './screens/reporting/ReportIssueStep3';
-import DuplicateCheckScreen from './screens/reporting/DuplicateCheck';
-import SubmissionSuccessScreen from './screens/reporting/SubmissionSuccess';
+// --- Onboarding & Authentication ---
+import SplashScreen from './screens/onboarding/SplashScreen';
+import Onboarding1Screen from './screens/onboarding/Onboarding1Screen';
+import Onboarding2Screen from './screens/onboarding/Onboarding2Screen';
+import Onboarding3Screen from './screens/onboarding/Onboarding3Screen';
+import LoginScreen from './screens/onboarding/LoginScreen';
+import SignUpScreen from './screens/onboarding/SignUpScreen';
 
-// --- Row 4: Resolution & Community Action ---
+// --- Home & Discover ---
+import HomeScreen from './screens/home/HomeScreen';
+import CategoriesScreen from './screens/home/CategoriesScreen';
+import MapviewScreen from './screens/home/MapviewScreen';
+import SearchAndFilterScreen from './screens/home/SearchAndFilterScreen';
+import IssueDetailsScreen from './screens/home/IssueDetailsScreen';
+
+// --- Reporting Flow ---
+import ReportIssueStep1Screen from './screens/reporting/ReportIssueStep1Screen';
+import ReportIssueStep2Screen from './screens/reporting/ReportIssueStep2Screen';
+import ReportIssueStep3Screen from './screens/reporting/ReportIssueStep3Screen';
+import DuplicateCheckScreen from './screens/reporting/DuplicateCheckScreen';
+import SubmissionSuccessScreen from './screens/reporting/SubmissionSuccessScreen';
+
+// --- Resolution & Community Action ---
 import CommunityActionScreen from './screens/resolution/CommunityActionScreen';
 import MissionDetailsScreen from './screens/resolution/MissionDetailsScreen';
 import ResolutionUpdateScreen from './screens/resolution/ResolutionUpdateScreen';
 import VerifyResolutionScreen from './screens/resolution/VerifyResolutionScreen';
 
-// --- Row 4: Profile & Community ---
+// --- Profile & Community ---
 import ProfileScreen from './screens/profile/ProfileScreen';
 import LeaderboardScreen from './screens/profile/LeaderboardScreen';
 
-// --- Row 4: Admin / Municipal Dashboard ---
+// --- Admin / Municipal Dashboard ---
 import MunicipalityDashboardScreen from './screens/admin/MunicipalityDashboardScreen';
 
 // --- Additional Screens ---
@@ -32,17 +47,9 @@ import SponsorsScreen from './screens/extras/SponsorsScreen';
 import OrganizationsScreen from './screens/extras/OrganizationsScreen';
 import AnalyticsScreen from './screens/extras/AnalyticsScreen';
 
-// --- Dev only: temporary menu for jumping between screens during testing ---
-import DevMenuScreen from './screens/DevMenuScreen';
-
-// TODO (teammates): import Onboarding/Auth and Home/Discover screens here
-// once ready, e.g.:
-// import SplashScreen from './screens/onboarding/SplashScreen';
-// import HomeScreen from './screens/home/HomeScreen';
-
-// NOTE: AuthProvider / context is not wired in yet since the backend isn't
-// built. Once JWT auth is ready, wrap NavigationContainer with AuthProvider
-// (see context/AuthContext.js) and gate screens behind login state.
+// NOTE: AuthProvider / JWT context is not wired in yet since the backend
+// isn't built. Once ready, wrap NavigationContainer with AuthProvider and
+// gate screens behind login state.
 
 const Stack = createNativeStackNavigator();
 
@@ -51,11 +58,23 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="DevMenu"
+          initialRouteName="Splash"
           screenOptions={{ headerShown: false }}
         >
-          {/* Dev menu - remove once real navigation flow is wired */}
-          <Stack.Screen name="DevMenu" component={DevMenuScreen} />
+          {/* Onboarding & Authentication */}
+          <Stack.Screen name="Splash" component={SplashScreen} />
+          <Stack.Screen name="Onboarding1" component={Onboarding1Screen} />
+          <Stack.Screen name="Onboarding2" component={Onboarding2Screen} />
+          <Stack.Screen name="Onboarding3" component={Onboarding3Screen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
+
+          {/* Home & Discover */}
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Categories" component={CategoriesScreen} />
+          <Stack.Screen name="Mapview" component={MapviewScreen} />
+          <Stack.Screen name="SearchAndFilter" component={SearchAndFilterScreen} />
+          <Stack.Screen name="IssueDetails" component={IssueDetailsScreen} />
 
           {/* Reporting Flow */}
           <Stack.Screen name="ReportIssueStep1" component={ReportIssueStep1Screen} />
@@ -85,8 +104,6 @@ export default function App() {
           <Stack.Screen name="Sponsors" component={SponsorsScreen} />
           <Stack.Screen name="Organizations" component={OrganizationsScreen} />
           <Stack.Screen name="Analytics" component={AnalyticsScreen} />
-
-          {/* TODO (teammates): add your remaining Stack.Screen entries here */}
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

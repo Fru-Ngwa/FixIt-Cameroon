@@ -1,29 +1,29 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING, RADIUS } from '../../constants/theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
+// Local image - replace assets/images/photo11.png with your mission photo
+const MISSION_IMAGE = require('../../assets/images/community.jpg');
 
 const MISSION = {
   title: 'Clean Molyko Road',
   category: 'Community Cleanup',
   organizer: 'Green Buea Association',
-  date: 'Sat, 18 May 2025',
+  date: 'Sat, 18 May 2026',
   time: '08:00 AM',
   meetingPoint: 'University of Buea Gate',
   volunteers: 24,
   sponsors: 3,
   going: 12,
-  image: 'https://images.unsplash.com/photo-1618477388954-7852f32655ec?w=800',
 };
 
 export default function MissionDetailsScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-    <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation?.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Mission Details</Text>
@@ -31,7 +31,7 @@ export default function MissionDetailsScreen({ navigation }) {
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
-        <Image source={{ uri: MISSION.image }} style={styles.image} />
+        <Image source={MISSION_IMAGE} style={styles.image} />
 
         <Text style={styles.title}>{MISSION.title}</Text>
         <Text style={styles.category}>{MISSION.category}</Text>
@@ -41,9 +41,7 @@ export default function MissionDetailsScreen({ navigation }) {
 
         <View style={styles.row}>
           <Ionicons name="calendar-outline" size={16} color={COLORS.textMuted} />
-          <Text style={styles.rowText}>
-            {MISSION.date} · {MISSION.time}
-          </Text>
+          <Text style={styles.rowText}>{MISSION.date} · {MISSION.time}</Text>
         </View>
         <View style={styles.row}>
           <Ionicons name="location-outline" size={16} color={COLORS.textMuted} />
@@ -65,11 +63,13 @@ export default function MissionDetailsScreen({ navigation }) {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.goingButton}>
+        <TouchableOpacity
+          style={styles.goingButton}
+          onPress={() => navigation.navigate('ResolutionUpdate')}
+        >
           <Text style={styles.goingButtonText}>I'm Going</Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
     </SafeAreaView>
   );
 }
@@ -113,10 +113,6 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: 'center',
     marginTop: SPACING.lg,
-  },
-  content: {
-    padding: SPACING.md,
-    paddingTop: SPACING.xl,
   },
   goingButtonText: { color: COLORS.white, fontWeight: '600', fontSize: 15 },
 });

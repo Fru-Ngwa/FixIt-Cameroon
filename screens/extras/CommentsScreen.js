@@ -14,18 +14,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING, RADIUS } from '../../constants/theme';
 
+// Local images - replace assets/images/photo24.png and photo25.png with commenter avatars
 const COMMENTS = [
   {
     id: '1',
     name: 'John T.',
-    avatar: 'https://randomuser.me/api/portraits/men/12.jpg',
-    text: "This pothole is getting worse every day. Almost damaged my tire this morning.",
+    avatar: require('../../assets/images/p1.jpg'),
+    text: 'This pothole is getting worse every day. Almost damaged my tire this morning.',
     time: '2hrs ago',
   },
   {
     id: '2',
     name: 'Sarah M.',
-    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+    avatar: require('../../assets/images/p2.jpg'),
     text: "I can confirm, it's still a major problem.",
     time: '1hr ago',
   },
@@ -38,21 +39,18 @@ export default function CommentsScreen({ navigation, route }) {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation?.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Comments</Text>
         <Text style={styles.issueId}>{issueId}</Text>
       </View>
 
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView contentContainerStyle={styles.content}>
           {COMMENTS.map((c) => (
             <View key={c.id} style={styles.commentRow}>
-              <Image source={{ uri: c.avatar }} style={styles.avatar} />
+              <Image source={c.avatar} style={styles.avatar} />
               <View style={styles.bubble}>
                 <View style={styles.bubbleHeader}>
                   <Text style={styles.name}>{c.name}</Text>

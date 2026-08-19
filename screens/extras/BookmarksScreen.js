@@ -6,25 +6,11 @@ import { COLORS, SPACING, RADIUS } from '../../constants/theme';
 
 const TABS = ['Issues', 'Missions'];
 
+// Local images - replace assets/images/photo26.png through photo28.png with saved issue photos
 const BOOKMARKS = [
-  {
-    id: '1',
-    title: 'Large pothole on Molyko Rd',
-    meta: 'Roads · Buea',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
-  },
-  {
-    id: '2',
-    title: 'Broken streetlight',
-    meta: 'Streetlights · Dsschang',
-    image: 'https://images.unsplash.com/photo-1517583698236-d4a41f5b0a7f?w=800',
-  },
-  {
-    id: '3',
-    title: 'Overflowing waste bin',
-    meta: 'Waste · Buea',
-    image: 'https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=800',
-  },
+  { id: '1', title: 'Large pothole on Molyko Rd', meta: 'Roads · Buea', image: require('../../assets/images/pothole.jpg') },
+  { id: '2', title: 'Broken streetlight', meta: 'Streetlights · Dschang', image: require('../../assets/images/streetlight.jpg') },
+  { id: '3', title: 'Overflowing waste bin', meta: 'Waste · Buea', image: require('../../assets/images/gutter.jpg') },
 ];
 
 export default function BookmarksScreen({ navigation }) {
@@ -33,7 +19,7 @@ export default function BookmarksScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation?.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Bookmarks</Text>
@@ -51,8 +37,12 @@ export default function BookmarksScreen({ navigation }) {
       <ScrollView contentContainerStyle={styles.content}>
         {tab === 'Issues' ? (
           BOOKMARKS.map((item) => (
-            <TouchableOpacity key={item.id} style={styles.card}>
-              <Image source={{ uri: item.image }} style={styles.image} />
+            <TouchableOpacity
+              key={item.id}
+              style={styles.card}
+              onPress={() => navigation.navigate('IssueDetails', { issueId: item.id, title: item.title })}
+            >
+              <Image source={item.image} style={styles.image} />
               <View style={{ flex: 1 }}>
                 <Text style={styles.title}>{item.title}</Text>
                 <Text style={styles.meta}>{item.meta}</Text>

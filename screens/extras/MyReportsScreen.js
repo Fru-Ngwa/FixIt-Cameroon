@@ -6,6 +6,7 @@ import { COLORS, SPACING, RADIUS } from '../../constants/theme';
 
 const TABS = ['All', 'Open', 'Resolved'];
 
+// Local images - replace assets/images/photo21.png through photo23.png with report photos
 const REPORTS = [
   {
     id: '1',
@@ -13,7 +14,7 @@ const REPORTS = [
     category: 'Roads',
     status: 'Reported',
     date: 'Today, 10:30 AM',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
+    image: require('../../assets/images/pothole.jpg'),
   },
   {
     id: '2',
@@ -21,7 +22,7 @@ const REPORTS = [
     category: 'Streetlights',
     status: 'In Progress',
     date: 'Yesterday, 6:15 PM',
-    image: 'https://images.unsplash.com/photo-1517583698236-d4a41f5b0a7f?w=800',
+    image: require('../../assets/images/streetlight.jpg'),
   },
   {
     id: '3',
@@ -29,7 +30,7 @@ const REPORTS = [
     category: 'Waste',
     status: 'Resolved',
     date: '3 days ago',
-    image: 'https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=800',
+    image: require('../../assets/images/trash.jpg'),
   },
 ];
 
@@ -45,14 +46,12 @@ export default function MyReportsScreen({ navigation }) {
   const filtered =
     tab === 'All'
       ? REPORTS
-      : REPORTS.filter((r) =>
-          tab === 'Open' ? r.status !== 'Resolved' : r.status === 'Resolved'
-        );
+      : REPORTS.filter((r) => (tab === 'Open' ? r.status !== 'Resolved' : r.status === 'Resolved'));
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation?.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>My Reports</Text>
@@ -71,8 +70,12 @@ export default function MyReportsScreen({ navigation }) {
         {filtered.map((report) => {
           const statusStyle = STATUS_COLORS[report.status];
           return (
-            <TouchableOpacity key={report.id} style={styles.card}>
-              <Image source={{ uri: report.image }} style={styles.image} />
+            <TouchableOpacity
+              key={report.id}
+              style={styles.card}
+              onPress={() => navigation.navigate('IssueDetails', { issueId: report.id, title: report.title })}
+            >
+              <Image source={report.image} style={styles.image} />
               <View style={{ flex: 1 }}>
                 <Text style={styles.title}>{report.title}</Text>
                 <Text style={styles.meta}>{report.category} · {report.date}</Text>
