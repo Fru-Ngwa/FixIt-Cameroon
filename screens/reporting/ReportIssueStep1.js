@@ -6,32 +6,25 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS, SPACING } from '../../constants/theme';
 
 export default function ReportIssueStep1Screen({ navigation }) {
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.content}
-      showsVerticalScrollIndicator={false}
-    >
-
-      {/* HEADER */}
+    <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.backArrow}>‹</Text>
+        <TouchableOpacity onPress={() => navigation?.goBack()}>
+          <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
-
-        <Text style={styles.title}>
-          Report an Issue (Step 1)
-        </Text>
-
-        <View style={styles.emptySpace} />
-
+        <Text style={styles.headerTitle}>Report an Issue (Step 1)</Text>
+        <View style={styles.headerSpacer} />
       </View>
+
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
 
       {/* ADD PHOTOS */}
       <Text style={styles.label}>
@@ -119,7 +112,8 @@ export default function ReportIssueStep1Screen({ navigation }) {
         </Text>
       </TouchableOpacity>
 
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -131,43 +125,27 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    paddingHorizontal: 24,
-    paddingTop: 18,
-    paddingBottom: 30,
+    flexGrow: 1,
+    paddingHorizontal: 14,
+    paddingTop: 42,
+    paddingBottom: 70,
   },
 
   /* HEADER */
 
   header: {
-    height: 42,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 28,
+    padding: SPACING.md,
+    backgroundColor: COLORS.card,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
   },
 
-  backButton: {
-    width: 30,
-    height: 30,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
+  headerTitle: { fontSize: 18, fontWeight: '700', color: '#111111' },
 
-  backArrow: {
-    fontSize: 30,
-    color: '#222222',
-    lineHeight: 30,
-  },
-
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#111111',
-  },
-
-  emptySpace: {
-    width: 30,
-  },
+  headerSpacer: { width: 22 },
 
   /* LABEL */
 
@@ -184,14 +162,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 24,
+    gap: 6,
   },
 
   photoBox: {
-    width: 58,
-    height: 58,
+    flex: 1,
+    aspectRatio: 1,
     borderRadius: 6,
     backgroundColor: '#EEEEEE',
-    marginRight: 8,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
@@ -220,8 +198,8 @@ const styles = StyleSheet.create({
   },
 
   addPhotoBox: {
-    width: 58,
-    height: 58,
+    flex: 1,
+    aspectRatio: 1,
     borderWidth: 1,
     borderColor: '#DDDDDD',
     borderRadius: 6,
@@ -238,7 +216,7 @@ const styles = StyleSheet.create({
   /* MAP */
 
   mapBox: {
-    height: 175,
+    height: 135,
     borderRadius: 7,
     backgroundColor: '#E9EEF1',
     alignItems: 'center',
@@ -288,7 +266,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 22,
+    marginTop: 'auto',
   },
 
   nextText: {

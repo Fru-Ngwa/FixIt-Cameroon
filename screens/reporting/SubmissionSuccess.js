@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 28,
     paddingTop: 145,
+    paddingBottom: 70,
   },
 
   /* =========================
@@ -147,7 +148,8 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 12,
+    marginTop: 'auto',
+    marginBottom: 18,
   },
 
   viewButtonText: {

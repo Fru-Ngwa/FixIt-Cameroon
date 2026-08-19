@@ -7,6 +7,9 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS, SPACING } from '../../constants/theme';
 
 export default function ReportIssueStep2Screen({ navigation }) {
   const [category, setCategory] = useState('Roads');
@@ -15,27 +18,19 @@ export default function ReportIssueStep2Screen({ navigation }) {
   const [noticedDate, setNoticedDate] = useState('');
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.content}
-      showsVerticalScrollIndicator={false}
-    >
-
-      {/* HEADER */}
+    <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Text style={styles.backArrow}>‹</Text>
+        <TouchableOpacity onPress={() => navigation?.goBack()}>
+          <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
-
-        <Text style={styles.title}>
-          Report an Issue (Step 2)
-        </Text>
-
-        <View style={styles.emptySpace} />
+        <Text style={styles.headerTitle}>Report an Issue (Step 2)</Text>
+        <View style={styles.headerSpacer} />
       </View>
+
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
 
       {/* CATEGORY */}
       <Text style={styles.label}>Category</Text>
@@ -159,7 +154,8 @@ export default function ReportIssueStep2Screen({ navigation }) {
         </Text>
       </TouchableOpacity>
 
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -171,48 +167,32 @@ const styles = StyleSheet.create({
   },
 
   content: {
+    flexGrow: 1,
     paddingHorizontal: 24,
-    paddingTop: 40,
-    paddingBottom: 25,
+    paddingTop: 42,
+    paddingBottom: 65,
   },
 
   /* HEADER */
 
   header: {
-    height: 42,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 35,
+    padding: SPACING.md,
+    backgroundColor: COLORS.card,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
   },
 
-  backButton: {
-    width: 30,
-    height: 30,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
+  headerTitle: { fontSize: 18, fontWeight: '700', color: '#111111' },
 
-  backArrow: {
-    fontSize: 36,
-    color: '#222222',
-    lineHeight: 36,
-  },
-
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: '#111111',
-  },
-
-  emptySpace: {
-    width: 30,
-  },
+  headerSpacer: { width: 22 },
 
   /* LABELS */
 
   label: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
     color: '#111111',
     marginBottom: 7,
@@ -221,7 +201,7 @@ const styles = StyleSheet.create({
   /* CATEGORY */
 
   categoryBox: {
-    height: 48,
+    height: 42,
     borderWidth: 1,
     borderColor: '#DDDDDD',
     borderRadius: 6,
@@ -235,7 +215,7 @@ const styles = StyleSheet.create({
   },
 
   categoryText: {
-    fontSize: 15,
+    fontSize: 13,
     color: '#222222',
     fontWeight: '400',
     flex: 1,
@@ -280,20 +260,20 @@ const styles = StyleSheet.create({
   },
 
   counter: {
-    fontSize: 13,
+    fontSize: 11,
     color: '#888888',
   },
 
   descriptionBox: {
-    height: 80,
+    height: 78,
     borderWidth: 1,
     borderColor: '#DDDDDD',
     borderRadius: 6,
     paddingHorizontal: 12,
     paddingTop: 10,
-    fontSize: 15,
+    fontSize: 13,
     color: '#222222',
-    marginBottom: 18,
+    marginBottom: 20,
   },
 
   /* SEVERITY */
@@ -308,7 +288,7 @@ const styles = StyleSheet.create({
 
   severityButton: {
     flex: 1,
-    height: 44,
+    height: 42,
     borderWidth: 1,
     borderColor: '#DDDDDD',
     borderRadius: 6,
@@ -322,7 +302,7 @@ const styles = StyleSheet.create({
   },
 
   severityText: {
-    fontSize: 16,
+    fontSize: 13,
     color: '#222222',
   },
 
@@ -340,7 +320,7 @@ const styles = StyleSheet.create({
   /* DATE */
 
   dateBox: {
-    height: 48,
+    height: 42,
     borderWidth: 1,
     borderColor: '#DDDDDD',
     borderRadius: 6,
@@ -350,24 +330,24 @@ const styles = StyleSheet.create({
   },
 
   dateText: {
-    fontSize: 15,
+    fontSize: 13,
     color: '#AAAAAA',
   },
 
   /* NEXT */
 
   nextButton: {
-    height: 50,
+    height: 45,
     backgroundColor: '#079447',
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 22,
+    marginTop: 'auto',
   },
 
   nextText: {
     color: '#FFFFFF',
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: '700',
   },
 

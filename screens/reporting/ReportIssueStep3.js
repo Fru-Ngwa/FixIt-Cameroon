@@ -7,6 +7,9 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS, SPACING } from '../../constants/theme';
 
 export default function ReportIssueStep3Screen({ navigation }) {
   const [affectingMe, setAffectingMe] = useState('Yes');
@@ -14,27 +17,19 @@ export default function ReportIssueStep3Screen({ navigation }) {
   const [mission, setMission] = useState('');
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.content}
-      showsVerticalScrollIndicator={false}
-    >
-
-      {/* HEADER */}
+    <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.backArrow}>‹</Text>
+        <TouchableOpacity onPress={() => navigation?.goBack()}>
+          <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
-
-        <Text style={styles.title}>
-          Report an Issue (Step 3)
-        </Text>
-
-        <View style={styles.emptySpace} />
+        <Text style={styles.headerTitle}>Report an Issue (Step 3)</Text>
+        <View style={styles.headerSpacer} />
       </View>
+
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
 
       {/* AFFECTING ME */}
       <Text style={styles.label}>
@@ -112,17 +107,9 @@ export default function ReportIssueStep3Screen({ navigation }) {
         Add to Mission (optional)
       </Text>
 
-      <TouchableOpacity style={styles.missionBox}>
-        <Text style={styles.missionText}>
-          {mission || 'Link to an existing mission'}
-        </Text>
-
-        {/* Custom dropdown chevron */}
-        <View style={styles.chevron}>
-          <View style={styles.chevronLeft} />
-          <View style={styles.chevronRight} />
-        </View>
-      </TouchableOpacity>
+      <Text style={styles.missionText}>
+        {mission || 'Link to an existing mission'}
+      </Text>
 
       {/* MISSION SEARCH */}
       <TouchableOpacity style={styles.searchBox}>
@@ -148,7 +135,8 @@ export default function ReportIssueStep3Screen({ navigation }) {
         </Text>
       </TouchableOpacity>
 
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -160,43 +148,27 @@ const styles = StyleSheet.create({
   },
 
   content: {
+    flexGrow: 1,
     paddingHorizontal: 24,
-    paddingTop: 18,
-    paddingBottom: 25,
+    paddingTop: 42,
+    paddingBottom: 65,
   },
 
   /* HEADER */
 
   header: {
-    height: 42,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 25,
+    padding: SPACING.md,
+    backgroundColor: COLORS.card,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
   },
 
-  backButton: {
-    width: 30,
-    height: 30,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
+  headerTitle: { fontSize: 18, fontWeight: '700', color: '#111111' },
 
-  backArrow: {
-    fontSize: 30,
-    color: '#222222',
-    lineHeight: 30,
-  },
-
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#111111',
-  },
-
-  emptySpace: {
-    width: 30,
-  },
+  headerSpacer: { width: 22 },
 
   /* LABELS */
 
@@ -217,7 +189,7 @@ const styles = StyleSheet.create({
 
   yesNoButton: {
     height: 42,
-    width: 88,
+    flex: 1,
     borderWidth: 1,
     borderColor: '#DDDDDD',
     borderRadius: 6,
@@ -279,20 +251,12 @@ const styles = StyleSheet.create({
 
   /* MISSION */
 
-  missionBox: {
-    height: 42,
-    borderWidth: 1,
-    borderColor: '#DDDDDD',
-    borderRadius: 6,
-    paddingHorizontal: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
   missionText: {
     fontSize: 13,
-    color: '#AAAAAA',
+    color: '#666666',
+    fontWeight: '500',
+    marginLeft: 12,
+    marginBottom: 8,
   },
 
   /* CHEVRON */
@@ -331,7 +295,8 @@ const styles = StyleSheet.create({
     borderColor: '#DDDDDD',
     borderRadius: 6,
     paddingHorizontal: 12,
-    marginTop: 10,
+    paddingRight: 16,
+    paddingVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -343,15 +308,17 @@ const styles = StyleSheet.create({
   },
 
   smallChevron: {
-    width: 14,
-    height: 9,
+    width: 12,
+    height: 12,
     position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   smallChevronLeft: {
     position: 'absolute',
-    width: 7,
-    height: 2,
+    width: 8,
+    height: 3,
     backgroundColor: '#777777',
     transform: [{ rotate: '45deg' }],
     left: 0,
@@ -359,8 +326,8 @@ const styles = StyleSheet.create({
 
   smallChevronRight: {
     position: 'absolute',
-    width: 7,
-    height: 2,
+    width: 8,
+    height: 3,
     backgroundColor: '#777777',
     transform: [{ rotate: '-45deg' }],
     right: 0,
@@ -374,7 +341,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 22,
+    marginTop: 'auto',
   },
 
   submitText: {

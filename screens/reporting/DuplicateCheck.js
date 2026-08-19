@@ -6,30 +6,25 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS, SPACING } from '../../constants/theme';
 
 export default function DuplicateCheckScreen({ navigation }) {
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.content}
-      showsVerticalScrollIndicator={false}
-    >
-
-      {/* HEADER */}
+    <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.backArrow}>‹</Text>
+        <TouchableOpacity onPress={() => navigation?.goBack()}>
+          <Ionicons name="arrow-back" size={22} color={COLORS.text} />
         </TouchableOpacity>
-
-        <Text style={styles.title}>
-          Duplicate Check
-        </Text>
-
-        <View style={styles.emptySpace} />
+        <Text style={styles.headerTitle}>Duplicate Check</Text>
+        <View style={styles.headerSpacer} />
       </View>
+
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
 
       {/* SEARCH ICON */}
       <View style={styles.iconContainer}>
@@ -109,7 +104,8 @@ export default function DuplicateCheckScreen({ navigation }) {
         </Text>
       </TouchableOpacity>
 
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -121,43 +117,27 @@ const styles = StyleSheet.create({
   },
 
   content: {
+    flexGrow: 1,
     paddingHorizontal: 24,
     paddingTop: 18,
-    paddingBottom: 30,
+    paddingBottom: 70,
   },
 
   /* HEADER */
 
   header: {
-    height: 42,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 30,
+    padding: SPACING.md,
+    backgroundColor: COLORS.card,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
   },
 
-  backButton: {
-    width: 30,
-    height: 30,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
+  headerTitle: { fontSize: 18, fontWeight: '700', color: '#111111' },
 
-  backArrow: {
-    fontSize: 30,
-    color: '#222222',
-    lineHeight: 30,
-  },
-
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#111111',
-  },
-
-  emptySpace: {
-    width: 30,
-  },
+  headerSpacer: { width: 22 },
 
   /* SEARCH ICON */
 
@@ -296,6 +276,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 'auto',
     marginBottom: 10,
   },
 
