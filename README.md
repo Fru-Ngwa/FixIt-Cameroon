@@ -1,128 +1,180 @@
-# FixItCameroon 🇨
+# FixItCameroon
 
-**Together, we build a better Cameroon.**
+FixItCameroon is a civic-engagement mobile application that enables citizens to report local infrastructure and community issues, track their resolution in real time, and collaborate with municipal authorities and community organizations to address them.
 
-FixItCameroon is a civic-engagement mobile app that lets citizens report local infrastructure and community issues (potholes, broken streetlights, drainage problems, waste, water issues, and more), track resolution progress in real time, and collaborate with their community and local municipalities to get things fixed.
-
----
-
-## 📱 Features
-
-### A. Onboarding & Authentication
-- Splash screen and guided onboarding
-- Sign up / Login with email, phone, Google, or Facebook
-
-### B. Home & Discover
-- Home feed of nearby, popular, and followed issues
-- Category browsing (Roads, Streetlights, Drainage, Water, Waste, Environment, Buildings, Safety, Other)
-- Interactive map view of reported issues
-- Search & filter by category, status, severity, and distance
-- Detailed issue view with photos, location, and support/comments
-
-### C. Reporting Flow
-- Multi-step issue reporting (photos & location → details → additional info)
-- Severity tagging and mission linking
-- Duplicate issue detection before submission
-- Submission confirmation with unique Issue ID
-
-### D. Resolution & Community Action
-- Community "missions" citizens can join to help resolve issues
-- Mission details with volunteer sign-up
-- Resolution updates with before/after photo timeline
-- Citizen verification of completed resolutions
-
-### E. Profile & Community
-- User profile with reporting/resolution stats
-- Community leaderboard (monthly & all-time)
-- My reports, notifications, comments, bookmarks
-- Sponsors and partner organizations
-
-### F. Admin / Municipal Dashboard
-- Municipality-level overview of reported, in-progress, and resolved issues
-- Average resolution time and issue analytics
-- Recent issue management tools
+Built with React Native (Expo) on the frontend and a Node.js/Express + PostgreSQL (Prisma, hosted on Supabase) backend, with image storage handled through Cloudinary.
 
 ---
 
-## 🛠️ Tech Stack
+## Table of Contents
 
-- **Frontend:** _React as a PWA_
-- **Backend:** _Node/Express_
-- **Database:** _PostgreSQL_
-- **Maps & Location:** _Google Maps SDK_
-- **Auth:** Email/Phone, Google, Facebook
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [API Reference](#api-reference)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
-## 🚀 Getting Started
+## Overview
+
+Citizens can report issues such as potholes, broken streetlights, drainage problems, and waste management concerns, complete with photos and precise GPS location. Reports are visible to the community for support (upvoting) and discussion, and can be tracked through their resolution lifecycle. Municipal administrators have a dedicated dashboard for monitoring report volume, resolution performance, and managing issue status.
+
+## Features
+
+**Citizen-facing**
+- Account creation and authentication (JWT-based, with refresh token support)
+- Multi-step issue reporting with photo upload and automatic geolocation
+- Real-time issue feed with **All**, **Nearby** (distance-based), and **Popular** (engagement-based) filtering
+- Issue detail view with support (upvote) and comment functionality
+- Personal profile with report history and community points
+
+**Administrative**
+- Role-based access control (Citizen / Organization Representative / Admin)
+- Dedicated municipal dashboard with live issue statistics (status breakdown, average resolution time, recent activity)
+- In-place issue status management (Reported → In Progress → Resolved)
+- Seamless navigation between the administrative dashboard and the standard citizen experience
+
+**Platform**
+- Cloud-based image storage and optimization via Cloudinary
+- Secure token storage on-device via Expo SecureStore
+- PostgreSQL database hosted on Supabase, managed through Prisma ORM
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Mobile Frontend | React Native (Expo), React Navigation |
+| Backend API | Node.js, Express |
+| Database | PostgreSQL (Supabase) |
+| ORM | Prisma |
+| Authentication | JWT (access + refresh tokens), bcrypt |
+| Image Storage | Cloudinary |
+| Location Services | Expo Location |
+
+## Project Structure
+
+**Frontend**
+```
+FixIt-Cameroon/
+├── App.js
+├── constants/
+│   ├── theme.js
+│   └── config.js
+├── context/
+│   ├── AuthContext.js
+│   └── ReportContext.js
+├── services/
+│   └── api.js
+├── screens/
+│   ├── onboarding/
+│   ├── home/
+│   ├── reporting/
+│   ├── resolution/
+│   ├── profile/
+│   ├── admin/
+│   └── extras/
+└── assets/
+```
+
+**Backend**
+```
+fixitcameroon-backend/
+├── prisma/
+│   └── schema.prisma
+├── src/
+│   ├── config/
+│   │   ├── database.js
+│   │   └── cloudinary.js
+│   ├── controllers/
+│   ├── middleware/
+│   ├── routes/
+│   ├── utils/
+│   └── server.js
+└── .env
+```
+
+## Getting Started
 
 ### Prerequisites
-- Node.js (or relevant runtime) installed
-- SDK v54 initialized (see `/sdk` config)
-- API keys for Maps and Auth providers (see `.env.example`)
+- Node.js (LTS)
+- Expo CLI (`npx expo`)
+- A Supabase project (PostgreSQL database)
+- A Cloudinary account
 
-### Installation
+### Backend Setup
 ```bash
-git clone https://github.com/<org>/fixitcameroon.git
-cd fixitcameroon
+cd fixitcameroon-backend
 npm install
+npx prisma migrate dev --name init
+npm run dev
 ```
 
-### Running the app
+### Frontend Setup
 ```bash
-npm start
+cd FixIt-Cameroon
+npm install
+npx expo start -c
 ```
 
----
+Update `constants/config.js` with your backend's LAN IP address so a physical device can reach it during development.
 
-## 👥 Team & Screen Ownership
+## Environment Variables
 
-The UI is organized into rows/sections that map to individual contributor ownership:
-
-| Owner | Screens |
-|---|---|
-| Teammate 1 | Row 1 — Onboarding & Authentication (Splash, Onboarding, Login, Sign Up) |
-| Teammate 2 | Row 2 — Home & Discover (Home, Categories, Map View, Search & Filter, Issue Details) |
-| Teammate 3 | Row 3 — Reporting Flow (Report Steps 1–3, Duplicate Check, Submission Success) |
-| Teammate 4 | Rows 4–5 — Resolution & Community Action, Profile & Community, Admin/Municipal Dashboard, and Additional Screens (My Reports, Notifications, Comments, Bookmarks, Sponsors, Organizations, Analytics) |
-
-Please open a feature branch per screen/flow you're working on (e.g., `feature/onboarding`, `feature/reporting-flow`, `feature/resolution-flow`) and submit a PR for review before merging to `main`.
-
----
-
-## 📂 Project Structure
+The backend requires a `.env` file with the following:
 
 ```
-fixitcameroon/
-├── src/
-│   ├── screens/
-│   │   ├── onboarding/
-│   │   ├── home/
-│   │   ├── reporting/
-│   │   ├── resolution/
-│   │   ├── profile/
-│   │   └── admin/
-│   ├── components/
-│   ├── navigation/
-│   ├── services/
-│   └── assets/
-├── sdk/
-├── .env.example
-└── README.md
+DATABASE_URL=
+DIRECT_URL=
+JWT_SECRET=
+JWT_REFRESH_SECRET=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+PORT=5000
 ```
 
----
+`JWT_SECRET` and `JWT_REFRESH_SECRET` should be long, randomly generated values, kept distinct from one another and never committed to version control.
 
-## 🤝 Contributing
+## API Reference
 
-1. Fork or branch from `main`
-2. Follow the screen ownership table above to avoid overlapping work
-3. Keep commits scoped to a single screen/flow where possible
-4. Open a PR with screenshots of the screens you built
-5. Request review from at least one teammate before merging
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| POST | `/auth/signup` | Public | Create an account |
+| POST | `/auth/login` | Public | Authenticate and receive tokens |
+| POST | `/auth/refresh` | Public | Exchange a refresh token for a new access token |
+| GET | `/auth/me` | Authenticated | Get the current user's profile |
+| GET | `/issues` | Public | List issues (filterable by status, category, severity) |
+| GET | `/issues/:id` | Public | Get a single issue |
+| POST | `/issues` | Authenticated | Create a new issue report |
+| PUT | `/issues/:id` | Admin | Update an issue's status |
+| POST | `/issues/:id/support` | Authenticated | Toggle support (upvote) on an issue |
+| GET | `/issues/:id/comments` | Public | List comments on an issue |
+| POST | `/issues/:id/comments` | Authenticated | Add a comment |
+| POST | `/issues/:id/photos` | Authenticated | Upload photos to an issue |
+| DELETE | `/issues/:id/photos/:photoId` | Reporter / Admin | Delete a photo |
+| GET | `/admin/dashboard` | Admin | Aggregated statistics for the municipal dashboard |
 
----
+## Roadmap
 
-## 📄 License
+- Missions module (community cleanup events, volunteer tracking)
+- Bookmarks (save issues for later)
+- Notifications (status-change alerts)
+- Leaderboard (points-based community ranking)
+- Follow relationships (organizations and users)
 
-_TBD_
+## Contributing
+
+1. Create a feature branch from `main`
+2. Keep commits scoped to a single feature or fix where possible
+3. Open a pull request with a clear description of the change
+4. Request review before merging
+
+## License
+
+TBD
